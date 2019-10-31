@@ -1,6 +1,7 @@
 #!python
 import random
 
+
 def is_sorted(items):
     """Return a boolean indicating whether given items are in sorted order.
     TODO: Running time: O(n), because iterating through the list once
@@ -22,10 +23,20 @@ def is_sorted(items):
 def bubble_sort(items):
     """Sort given items by swapping adjacent items that are out of order, and
     repeating until all items are in sorted order.
-    TODO: Running time: ??? Why and under what conditions?
-    TODO: Memory usage: ??? Why and under what conditions?"""
-    # TODO: Repeat until all items are in sorted order
-    # TODO: Swap adjacent items that are out of order
+    Running time: Worst case and Average -> O(n^2),
+    Best case O(n) is when the list is already sorted.
+    Memory usage: O(1) We are using only couple of variables"""
+    swaps = -1
+    total_swaps = 0
+    while swaps != 0:
+        swaps = 0
+        for i in range(len(items)-1):
+            if items[i] > items[i+1]:
+                items[i], items[i+1] = items[i+1], items[i]
+                swaps += 1
+            total_swaps += 1
+    print(f"bubble sort swaps: {total_swaps}")
+    return items
 
 
 def selection_sort(items):
@@ -49,9 +60,10 @@ def selection_sort(items):
         for j in range(i+1, len(items)):
             if items[j] < items[min_idx]:
                 min_idx = j
+            swaps += 1
         items[i], items[min_idx] = items[min_idx], items[i]
-        swaps += 1
-    print(f"# of swaps: {swaps}")
+        
+    print(f"Selection sort swaps: {swaps}")
     return items
 
 
@@ -77,57 +89,36 @@ def insertion_sort(items):
             if items[j] > items[j+1]:
                 # print(f"items before swap: {items}")
                 items[j], items[j+1] = items[j+1], items[j]
-                swaps += 1
+            
+        
                 # print(f"items after swap: {items}")
             # found the right spot for the unsorted item in the sorted part
             # of the list
             else:
                 # print("break it")
                 break
-    print(f"# of swaps: {swaps}")
+            swaps += 1
+    print(f"Insertion sort swaps: {swaps}")
     return items
 
 
-def insertion_sort_thom(items):
-    """
-        Sort given items by taking first unsorted item, inserting it in sorted
-        order in front of items, and repeating until all items are in order.
-        Args:
-            list of ints.
-        Output:
-            list of ints in ascending order.
-    """
-    swaps = 0
-    for i in range(1, len(items)):
-        # set current value to index i (1)
-        current_val = items[i]
-        # while previous element is *not* in sorted order & index is > 0
-        # i will represent the range of the "sorted" section of the list
-        while items[i-1] > current_val and i > 0:
-            # set current value to previous value
-            items[i] = items[i-1]
-            # decrement index
-            i = i-1
-            
-        # if current_val was not in sorted order, it will get replaced because
-        # i was decremented. If not, loop continues.
-        items[i] = current_val
-        swaps += 1
-    print(f"thoms swaps: {swaps}")
-    return items
-
-
+# TODO: why number or swaps are not reducing in the insertion sort comapring
+# to bubble sort
 if __name__ == "__main__":
     sorted_items = [3, 4, 6, 7, 7, 9, 11, 15, 18, 20]
     unsorted_items = [3, 15, 4, 7, 20, 6, 18, 9, 7]
-    sample = [3, 1, 5, 2, 18, 14]
-    # rand_nums = [random.randint(1, 100) for i in range(20)]
-    # print(rand_nums)
-    rand_nums = [15, 28, 18, 81, 39, 50, 15, 16, 78,
-                 14, 69, 22, 89, 41, 97, 59, 78, 40, 62, 32]
-    print(rand_nums)
-    insertion_sort = insertion_sort(unsorted_items)
-    thom_insertion_sort = insertion_sort_thom(unsorted_items)
+    sample = [6, 2, 4, 3]
+    # rand_nums = [random.randint(1, 100) for i in range(10)]
     
-    print(f"insertion sort result: {insertion_sort}")
-    print(f"Thom's insertion sort result: {thom_insertion_sort}")
+    rand_nums = [50, 21, 95, 20, 89, 57, 87, 83, 89, 10]
+    print(rand_nums)
+    bubble_sort = bubble_sort(rand_nums)
+    print(f"Bubble sort: {bubble_sort}")
+    
+    rand_nums = [50, 21, 95, 20, 89, 57, 87, 83, 89, 10]
+    selection_sort = selection_sort(rand_nums)
+    print(f"Selection sort result: {selection_sort}")
+
+    rand_nums = [50, 21, 95, 20, 89, 57, 87, 83, 89, 10]
+    insertion_sort = insertion_sort(rand_nums)
+    print(f"Insertion sort result: {insertion_sort}")
