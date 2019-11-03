@@ -9,20 +9,28 @@ def merge(items1, items2):
     # TODO: Repeat until one list is empty
     # TODO: Find minimum item in both lists and append it to new list
     # TODO: Append remaining items in non-empty list to new list
+    
     if not items1 and not items2:
         return []
     
     merged_list = []
     index1, index2 = 0, 0
+    
     while index1 < len(items1) or index2 < len(items2):
-        if 
+        
         if items1[index1] <= items2[index2]:
             merged_list.append(items1[index1])
             index1 += 1
         else:
             merged_list.append(items2[index2])
             index2 += 1
-        print(merged_list)
+        if index1 == len(items1) and index2 == len(items2):
+            return merged_list
+        elif index1 == len(items1) or index2 == len(items2):
+            break
+    rest_index = index1 if index1
+    
+    print(index1, index2)
     return merged_list
 
 
