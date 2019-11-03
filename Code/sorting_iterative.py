@@ -34,7 +34,7 @@ def bubble_sort(items):
             if items[i] > items[i+1]:
                 items[i], items[i+1] = items[i+1], items[i]
                 swaps += 1
-            total_swaps += 1
+                total_swaps += 1
     print(f"bubble sort swaps: {total_swaps}")
     return items
 
@@ -60,9 +60,8 @@ def selection_sort(items):
         for j in range(i+1, len(items)):
             if items[j] < items[min_idx]:
                 min_idx = j
-            swaps += 1
         items[i], items[min_idx] = items[min_idx], items[i]
-        
+        swaps += 1
     print(f"Selection sort swaps: {swaps}")
     return items
 
@@ -71,8 +70,9 @@ def insertion_sort(items):
     """
     Sort given items by taking first unsorted item, inserting it in sorted
     order in front of items, and repeating until all items are in order.
-    TODO: Running time: ??? Why and under what conditions?
-    TODO: Memory usage: ??? Why and under what conditions?
+    Running time: Worst case and Average -> O(n^2),
+    Best case O(n) is when the list is already sorted.
+    Memory usage: O(1) We are using only couple of variables
     Args:
         items(list): list of unsorted elements
     Return:
@@ -89,20 +89,17 @@ def insertion_sort(items):
             if items[j] > items[j+1]:
                 # print(f"items before swap: {items}")
                 items[j], items[j+1] = items[j+1], items[j]
-            
-        
+                swaps += 1
                 # print(f"items after swap: {items}")
             # found the right spot for the unsorted item in the sorted part
             # of the list
             else:
                 # print("break it")
                 break
-            swaps += 1
     print(f"Insertion sort swaps: {swaps}")
     return items
 
 
-# TODO: why number or swaps are not reducing in the insertion sort comapring
 # to bubble sort
 if __name__ == "__main__":
     sorted_items = [3, 4, 6, 7, 7, 9, 11, 15, 18, 20]
