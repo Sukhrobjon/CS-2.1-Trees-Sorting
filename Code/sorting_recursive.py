@@ -2,7 +2,7 @@
 from sorting_iterative import bubble_sort, selection_sort, insertion_sort
 
 
-def merge(items1, items2):
+def merge(items_1, items_2):
     """
     Merge given lists of items, each assumed to already be in sorted order,
     and return a new list containing all items in sorted order.
@@ -11,13 +11,13 @@ def merge(items1, items2):
     Runnning and memory time is the same for all cases, because we always copy
     all elements from both lists to new merged list.
     Args:
-        items1(list): sorted list of elements
-        items2(list): sorted list of elements
+        items_1(list): sorted list of elements
+        items_2(list): sorted list of elements
     Returns:
         merged_list(list): merged list of the two sorted lists
     """
     # check if lists are empty
-    if not items1 and not items2:
+    if not items_1 and not items_2:
         return []
 
     # used to merge two sorted lists together
@@ -25,27 +25,27 @@ def merge(items1, items2):
     index1, index2 = 0, 0
 
     # iterate until one or both list are done
-    while (index1 < len(items1)) and (index2 < len(items2)):
+    while (index1 < len(items_1)) and (index2 < len(items_2)):
         # print(f"i: {index1}, j: {index2}")
-        if items1[index1] <= items2[index2]:
-            merged_list.append(items1[index1])
+        if items_1[index1] <= items_2[index2]:
+            merged_list.append(items_1[index1])
             index1 += 1
         else:
-            merged_list.append(items2[index2])
+            merged_list.append(items_2[index2])
             index2 += 1
 
-    # check if there are still elements in items1
-    if index1 <= len(items1)-1:
-        # copy the rest of the elements from array items1 to merged_list
-        while index1 < len(items1):
-            merged_list.append(items1[index1])
+    # check if there are still elements in items_1
+    if index1 <= len(items_1)-1:
+        # copy the rest of the elements from array items_1 to merged_list
+        while index1 < len(items_1):
+            merged_list.append(items_1[index1])
             index1 += 1
 
-    # check if there are still elements in items2
-    elif index2 <= len(items2)-1:
-        # copy the rest of the elements from array items2 to merged_list
-        while index2 < len(items2):
-            merged_list.append(items2[index2])
+    # check if there are still elements in items_2
+    elif index2 <= len(items_2)-1:
+        # copy the rest of the elements from array items_2 to merged_list
+        while index2 < len(items_2):
+            merged_list.append(items_2[index2])
             index2 += 1
 
     return merged_list
@@ -75,30 +75,38 @@ def split_sort_merge(items):
     # splitting part
     mid = len(items) // 2
     # copy the first half of the array
-    items1 = items[:mid]  # O(n)
+    items_1 = items[:mid]  # O(n)
     # copy the second half of the array
-    items2 = items[mid:]  # O(m)
+    items_2 = items[mid:]  # O(m)
 
     # sorting the splitted lists using iterative algorithms
-    bubble_sort(items1)  # O(n^2) refer to the bubble sort docstring
-    insertion_sort(items2)  # O(m^2) refer to insertion sort docstring
+    bubble_sort(items_1)  # O(n^2) refer to the bubble sort docstring
+    insertion_sort(items_2)  # O(m^2) refer to insertion sort docstring
 
     # now merge two sorted arrays
-    merged_list = merge(items1, items2)  # O(n+m) = O(N)
+    merged_list = merge(items_1, items_2)  # O(n+m) = O(N)
 
     return merged_list
 
 
-
 def merge_sort(items):
-    """Sort given items by splitting list into two approximately equal halves,
+    """
+    Sort given items by splitting list into two approximately equal halves,
     sorting each recursively, and merging results into a list in sorted order.
-    TODO: Running time: ??? Why and under what conditions?
-    TODO: Memory usage: ??? Why and under what conditions?"""
-    # TODO: Check if list is so small it's already sorted (base case)
-    # TODO: Split items list into approximately equal halves
-    # TODO: Sort each half by recursively calling merge sort
-    # TODO: Merge sorted halves into one list in sorted order
+    Running time: O(nlogn), 
+    Memory usage: ??? Why and under what conditions?
+    """
+    # base case if there is only 1 or 0 item in the list return itself
+    # since it is already sorted
+    if len(items) <= 1:
+        return items
+
+    mid = len(items) // 2
+    items_1 = merge_sort(items[0:mid])
+    items_2 = merge_sort(items[mid:])
+    print(f"items_1: {items_1}, items_2: {items_2}")
+
+    return merge(items_1, items_2)
 
 
 def partition(items, low, high):
@@ -128,15 +136,24 @@ def quick_sort(items, low=None, high=None):
 
 
 if __name__ == "__main__":
+    
     splitter = "##############################################################"
     # a = [1, 2, 3, 5, 9, 14]
     # b = [4, 6, 7, 8, 10, 12, 13, 15]
     # merged_list = merge(a, b)
+    # print(splitter)
     # print(f"Merging sorted lists: {merged_list}")
 
     # testing split sort merge function
 
+    # items = [50, 21, 95, 20, 89, 57, 87, 83, 89, 10, 25, 5, 8, 99]
+    # split_sort_merged_items = split_sort_merge(items)
+    # print(splitter)
+    # print(f"Split sort merge: {split_sort_merged_items}")
+
+    # testing merge sort recursively
+
     items = [50, 21, 95, 20, 89, 57, 87, 83, 89, 10, 25, 5, 8, 99]
-    split_sort_merged_items = split_sort_merge(items)
+    merge_sort_rec = merge_sort(items)
     print(splitter)
-    print(f"Split sort merge: {split_sort_merged_items}")
+    print(f"Merge sort recursively: {merge_sort_rec}")
