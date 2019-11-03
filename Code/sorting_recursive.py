@@ -9,6 +9,22 @@ def merge(items1, items2):
     # TODO: Repeat until one list is empty
     # TODO: Find minimum item in both lists and append it to new list
     # TODO: Append remaining items in non-empty list to new list
+    if not items1 and not items2:
+        return []
+    
+    merged_list = []
+    index1, index2 = 0, 0
+    while index1 < len(items1) or index2 < len(items2):
+        if 
+        if items1[index1] <= items2[index2]:
+            merged_list.append(items1[index1])
+            index1 += 1
+        else:
+            merged_list.append(items2[index2])
+            index2 += 1
+        print(merged_list)
+    return merged_list
+
 
 
 def split_sort_merge(items):
@@ -61,3 +77,9 @@ def quick_sort(items, low=None, high=None):
     # TODO: Partition items in-place around a pivot and get index of pivot
     # TODO: Sort each sublist range by recursively calling quick sort
 
+
+if __name__ == "__main__":
+    a = [1, 3, 9, 11]
+    b = [2, 5, 6, 8]
+    merged_list = merge(a, b)
+    print(f"Merged already sorted lists: {merged_list}")
