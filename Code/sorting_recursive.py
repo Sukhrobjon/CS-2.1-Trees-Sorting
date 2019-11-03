@@ -2,37 +2,51 @@
 
 
 def merge(items1, items2):
-    """Merge given lists of items, each assumed to already be in sorted order,
+    """
+    Merge given lists of items, each assumed to already be in sorted order,
     and return a new list containing all items in sorted order.
-    TODO: Running time: ??? Why and under what conditions?
-    TODO: Memory usage: ??? Why and under what conditions?"""
-    # TODO: Repeat until one list is empty
-    # TODO: Find minimum item in both lists and append it to new list
-    # TODO: Append remaining items in non-empty list to new list
-    
+    Running time: O(n+m) where n and m are lengths of two sorted lists
+    Memory usage: O(n+m) where n and m are lengths of two sorted lists,
+    Runnning and memory time is the same for all cases.
+    Args:
+        items1(list): sorted list of elements
+        items2(list): sorted list of elements
+    Returns:
+        merged_list(list): merged list of the two sorted lists
+    """
+    # check if lists are empty
     if not items1 and not items2:
         return []
-    
+
     merged_list = []
     index1, index2 = 0, 0
-    
-    while index1 < len(items1) or index2 < len(items2):
-        
+
+    # iterate until one or both list are done
+    while (index1 < len(items1)) and (index2 < len(items2)):
+        # print(f"i: {index1}, j: {index2}")
         if items1[index1] <= items2[index2]:
             merged_list.append(items1[index1])
             index1 += 1
         else:
             merged_list.append(items2[index2])
             index2 += 1
-        if index1 == len(items1) and index2 == len(items2):
-            return merged_list
-        elif index1 == len(items1) or index2 == len(items2):
-            break
-    rest_index = index1 if index1
-    
-    print(index1, index2)
-    return merged_list
 
+    # check if there are still elements in items1
+    if index1 <= len(items1)-1:
+        # copy the rest of the elements from array items1 to merged_list
+        while index1 < len(items1):
+            merged_list.append(items1[index1])
+            index1 += 1
+
+    # check if there are still elements in items2
+    elif index2 <= len(items2)-1:
+        # copy the rest of the elements from array items2 to merged_list
+        while index2 < len(items2):
+            merged_list.append(items2[index2])
+            index2 += 1
+
+    # print(index1, index2)
+    return merged_list
 
 
 def split_sort_merge(items):
@@ -71,9 +85,6 @@ def partition(items, low, high):
     # TODO: Move pivot item into final position [p] and return index p
     
 
-
-
-
 def quick_sort(items, low=None, high=None):
     """Sort given items in place by partitioning items in range `[low...high]`
     around a pivot item and recursively sorting each remaining sublist range.
@@ -87,7 +98,7 @@ def quick_sort(items, low=None, high=None):
 
 
 if __name__ == "__main__":
-    a = [1, 3, 9, 11]
-    b = [2, 5, 6, 8]
+    a = [1, 2, 3, 5, 9, 14]
+    b = [4, 6, 7, 8, 10, 12, 13, 15]
     merged_list = merge(a, b)
-    print(f"Merged already sorted lists: {merged_list}")
+    print(f"Merging sorted lists: {merged_list}")
