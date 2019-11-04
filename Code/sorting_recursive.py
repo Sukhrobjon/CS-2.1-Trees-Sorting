@@ -67,7 +67,7 @@ def split_sort_merge(items):
 
     Args:
         items(list): unsorted list of elements
-        
+
     Returns:
         merged_list(list): sorted list of elements of original list. Reference
         of the original list didnt change.
@@ -128,7 +128,8 @@ def partition(items, low, high):
     Best and average case running time: O(logn) when the two halves of the list
     are balanced which means they have apporximately the same length
 
-    Worst case running time: O(n) when one half is much bigger than the other half
+    Worst case running time: O(n) when one half is much bigger than the other
+    half
     
     Memory usage: O(1) always, because we are just swapping elements in-place,
     and using only consant numbe of variables to keep track of the elements.
@@ -157,6 +158,7 @@ def partition(items, low, high):
             # found the smaller number than the pivot, so swap it with
             # pivot index so it would be left side of the pivot index
             items[i], items[pivot_index] = items[pivot_index], items[i]
+            # move the pivot index 1 to the right
             pivot_index += 1
     
     # swap the pivot num from the end to the pivot index
@@ -217,7 +219,7 @@ def quick_sort(items, low=None, high=None):
 #         items[mid], items[high] = items[high], items[mid]
 
 
-if __name__ == "__main__":   
+if __name__ == "__main__":
     splitter = "##############################################################"
     # a = [1, 2, 3, 5, 9, 14]
     # b = [4, 6, 7, 8, 10, 12, 13, 15]

@@ -155,6 +155,7 @@ class IntegerSortTest(unittest.TestCase):
         sorted_items3 = sorted(items3)  # Copy
         sort(items3)  # Mutate
         assert items3 == sorted_items3
+    
 
 
 class StringSortTest(unittest.TestCase):
@@ -216,6 +217,8 @@ def get_sort_function():
 
 # If using PyTest, change this variable to the sort function you want to test
 sort = bubble_sort
+
+# if sort == 'merge_sort'
 
 
 if __name__ == '__main__':
