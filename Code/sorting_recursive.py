@@ -85,7 +85,7 @@ def split_sort_merge(items):
 
     # now merge two sorted arrays
     merged_list = merge(items_1, items_2)  # O(n+m) = O(N)
-
+    # items = merged_list.copy()
     return merged_list
 
 
@@ -93,7 +93,7 @@ def merge_sort(items):
     """
     Sort given items by splitting list into two approximately equal halves,
     sorting each recursively, and merging results into a list in sorted order.
-    Running time: O(nlogn), 
+    Running time: O(nlogn)
     Memory usage: ??? Why and under what conditions?
     """
     # base case if there is only 1 or 0 item in the list return itself
@@ -122,6 +122,23 @@ def partition(items, low, high):
     # TODO: Move items greater than pivot into back of range [p+1...high]
     # TODO: Move pivot item into final position [p] and return index p
     
+    # if len(items) > 3:
+
+    
+    # last element is the pivot
+    pivot = items[high]
+    pivot_index = low
+    for i in range(low, high):
+        if items[i] <= pivot:
+            # found the smaller number than the pivot, so swap it with
+            # pivot index so it would be left side of the pivot index
+            items[i], items[pivot_index] = items[pivot_index], items[i]
+            pivot_index += 1
+    # swap the pivot num from end to the pivot index
+    items[high], items[pivot_index] = items[pivot_index], items[high]
+    
+    return pivot_index
+
 
 def quick_sort(items, low=None, high=None):
     """Sort given items in place by partitioning items in range `[low...high]`
@@ -133,10 +150,22 @@ def quick_sort(items, low=None, high=None):
     # TODO: Check if list or range is so small it's already sorted (base case)
     # TODO: Partition items in-place around a pivot and get index of pivot
     # TODO: Sort each sublist range by recursively calling quick sort
+    if low is None and high is None:
+        low = 0
+        high = len(items)-1
 
+    if low < high:
+        # get the pivot index
+        pivot_index = partition(items, low, high)
+        # left half of the list to be sorted
+        quick_sort(items, low, pivot_index - 1)
+        # right half of the list to be sorted
+        quick_sort(items, pivot_index + 1, high)
 
-if __name__ == "__main__":
     
+
+
+if __name__ == "__main__":   
     splitter = "##############################################################"
     # a = [1, 2, 3, 5, 9, 14]
     # b = [4, 6, 7, 8, 10, 12, 13, 15]
@@ -153,7 +182,12 @@ if __name__ == "__main__":
 
     # testing merge sort recursively
 
+    # items = [50, 21, 95, 20, 89, 57, 87, 83, 89, 10, 25, 5, 8, 99]
+    # merge_sort_rec = merge_sort(items)
+    # print(splitter)
+    # print(f"Merge sort recursively: {merge_sort_rec}")
+
     items = [50, 21, 95, 20, 89, 57, 87, 83, 89, 10, 25, 5, 8, 99]
-    merge_sort_rec = merge_sort(items)
+    quick_sort(items)
     print(splitter)
-    print(f"Merge sort recursively: {merge_sort_rec}")
+    print(f"Items after quick_sort recursively: {items}")
