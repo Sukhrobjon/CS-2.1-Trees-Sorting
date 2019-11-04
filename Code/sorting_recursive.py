@@ -67,6 +67,7 @@ def split_sort_merge(items):
 
     Args:
         items(list): unsorted list of elements
+        
     Returns:
         merged_list(list): sorted list of elements of original list. Reference
         of the original list didnt change.
@@ -93,8 +94,16 @@ def merge_sort(items):
     """
     Sort given items by splitting list into two approximately equal halves,
     sorting each recursively, and merging results into a list in sorted order.
-    Running time: O(nlogn)
-    Memory usage: ??? Why and under what conditions?
+    Running time: O(nlogn) in all cases, as we need to split the array
+    approximately two equal parts in a O(logn) time and merge them back in O(n)
+    run time. so overall O(nlogn)
+    Memory usage: O(nlogn) in all cases for recursive stack
+    
+    Args:
+        items(list): unsorted list of elements
+    
+    Returns:
+        merged_list(list): unsorted list of elements
     """
     # base case if there is only 1 or 0 item in the list return itself
     # since it is already sorted
@@ -110,46 +119,78 @@ def merge_sort(items):
 
 
 def partition(items, low, high):
-    """Return index `p` after in-place partitioning given items in range
-    `[low...high]` by choosing a pivot (TODO: document your method here) from
-    that range, moving pivot into index `p`, items less than pivot into range
-    `[low...p-1]`, and items greater than pivot into range `[p+1...high]`.
-    TODO: Running time: ??? Why and under what conditions?
-    TODO: Memory usage: ??? Why and under what conditions?"""
-    # TODO: Choose a pivot any way and document your method in docstring above
-    # TODO: Loop through all items in range [low...high]
-    # TODO: Move items less than pivot into front of range [low...p-1]
-    # TODO: Move items greater than pivot into back of range [p+1...high]
-    # TODO: Move pivot item into final position [p] and return index p
-    
-    # if len(items) > 3:
+    """
+    Return index `p` after in-place partitioning given items in range
+    `[low...high]` by choosing the last element of the list as a pivot and
+    from that range, moving pivot into index `p`, items less than pivot into
+    range `[low...p-1]`, and items greater than pivot into range `[p+1...high]`
 
+    Best and average case running time: O(logn) when the two halves of the list
+    are balanced which means they have apporximately the same length
+
+    Worst case running time: O(n) when one half is much bigger than the other half
+    
+    Memory usage: O(1) always, because we are just swapping elements in-place,
+    and using only consant numbe of variables to keep track of the elements.
+
+    Args:
+        items(list): unsorted list
+        low(int): first index of the list
+        high(int): the last element of the list
+    
+    Returns:
+        pivot_index(int): the index of pivot point in the list
+    """
+
+    # if len(items) > 3:
+    #     _find_median(items)
     
     # last element is the pivot
     pivot = items[high]
+    # this is the index where the pivot will be placed after all comparisons
+    # made and list is `sorted` relative to the pivot point. or we can see
+    # this as the first larger number than the pivot.
     pivot_index = low
+
     for i in range(low, high):
         if items[i] <= pivot:
             # found the smaller number than the pivot, so swap it with
             # pivot index so it would be left side of the pivot index
             items[i], items[pivot_index] = items[pivot_index], items[i]
             pivot_index += 1
-    # swap the pivot num from end to the pivot index
+    
+    # swap the pivot num from the end to the pivot index
     items[high], items[pivot_index] = items[pivot_index], items[high]
     
     return pivot_index
 
 
 def quick_sort(items, low=None, high=None):
-    """Sort given items in place by partitioning items in range `[low...high]`
+    """
+    Sort given items in place by partitioning items in range `[low...high]`
     around a pivot item and recursively sorting each remaining sublist range.
-    TODO: Best case running time: ??? Why and under what conditions?
-    TODO: Worst case running time: ??? Why and under what conditions?
-    TODO: Memory usage: ??? Why and under what conditions?"""
-    # TODO: Check if high and low range bounds have default values (not given)
-    # TODO: Check if list or range is so small it's already sorted (base case)
-    # TODO: Partition items in-place around a pivot and get index of pivot
-    # TODO: Sort each sublist range by recursively calling quick sort
+
+    Best and average case running time: O(nlogn) when two halves of the list
+    partitioned approximetely equal sizes.
+
+    Worst case running time: O(n^2) when two halves of the list partitioned
+    lopsided, where one side of the partition is much bigger than the other
+    half. In this case we need to repeat the partition `n` times as opposed
+    to the average case where the partition happens logn times. This happens
+    mostly when list is almost sorted or the pivot point happens to be the
+    smallest or the largest number in the list (this rarely happens).
+
+    Best and average case memory usage: O(logn), this is the recursion stack
+    paid by the language. Again this depends on how balanced of two halves
+    of the list.
+    Worst case memory usage: O(n)
+
+    Args:
+        items(list): unsorted list
+        low(int): first index of the list
+        high(int): the last element of the list
+    """
+
     if low is None and high is None:
         low = 0
         high = len(items)-1
@@ -162,7 +203,18 @@ def quick_sort(items, low=None, high=None):
         # right half of the list to be sorted
         quick_sort(items, pivot_index + 1, high)
 
-    
+
+# def find_median(items, low=0, high=len(items)):
+#     """Swap the items in the list so median will be at the end of the list"""
+#     # TODO: Ask about how to define median of low, mid, high???
+#     # find the median
+#     mid = low + (high - low) // 2
+#     if items[mid] < items[low]:
+#         items[mid], items[low] = items[low], items[mid]
+#     if items[high] < items[low]:
+#         items[high], items[low] = items[low], items[high]
+#     if items[mid] < items[high]:
+#         items[mid], items[high] = items[high], items[mid]
 
 
 if __name__ == "__main__":   
