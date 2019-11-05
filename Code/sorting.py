@@ -3,12 +3,20 @@
 from sorting_iterative import is_sorted, bubble_sort, selection_sort, insertion_sort
 from sorting_recursive import split_sort_merge, merge_sort, quick_sort
 from sorting_integer import counting_sort, bucket_sort
+import random
+
+
+def random_chars(num_of_chars=20, min=1, max=50):
+    """Return random upper case letters(duplicates are allowed).
+    NOTE: In progress"""
+    import string
+    return [random.choice(string.ascii_uppercase) for _ in range(num_of_chars)]
 
 
 def random_ints(count=20, min=1, max=50):
     """Return a list of `count` integers sampled uniformly at random from
     given range [`min`...`max`] with replacement (duplicates are allowed)."""
-    import random
+    
     return [random.randint(min, max) for _ in range(count)]
 
 

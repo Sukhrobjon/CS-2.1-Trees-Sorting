@@ -26,6 +26,10 @@ def bubble_sort(items):
     Running time: Worst case and Average -> O(n^2),
     Best case O(n) is when the list is already sorted.
     Memory usage: O(1) We are using only couple of variables"""
+    # handling empty list
+    if not items:
+        return items
+
     swaps = -1
     total_swaps = 0
     while swaps != 0:
