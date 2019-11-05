@@ -4,23 +4,17 @@ import random
 
 def is_sorted(items):
     """Return a boolean indicating whether given items are in sorted order.
-    TODO: Running time: O(n), because iterating through the list once
-    TODO: Memory usage: O(1) we are not creating extra space"""
-    # TODO: Check that all adjacent items are in order, return early if so
-
+    Running time: O(n), because iterating through the list once
+    Memory usage: O(1) we are not creating extra space"""
     i = 0
-    j = 1
-
-    while j <= len(items) - 1:
-        if items[i] > items[j]:  # found unsorted pair
+    while i < len(items) - 1:
+        if items[i] > items[i+1]:  # found unsorted pair
             return False
         i += 1
-        j += 1
-
     return True
 
 
-def bubble_sort(items):
+def bubble_sort(items, reversed=False):
     """Sort given items by swapping adjacent items that are out of order, and
     repeating until all items are in sorted order.
     Running time: Worst case and Average -> O(n^2),
@@ -40,10 +34,15 @@ def bubble_sort(items):
                 swaps += 1
                 total_swaps += 1
     print(f"bubble sort swaps: {total_swaps}")
+    if reversed:
+        items = items[::-1]
+        return items
     return items
+    
 
 
-def selection_sort(items):
+
+def selection_sort(items, reversed=False):
     """
     Sort given items by finding minimum item, swapping it with first
     unsorted item, and repeating until all items are in sorted order.
@@ -67,10 +66,14 @@ def selection_sort(items):
         items[i], items[min_idx] = items[min_idx], items[i]
         swaps += 1
     print(f"Selection sort swaps: {swaps}")
+
+    if reversed:
+        items = items[::-1]
+        return items
     return items
 
 
-def insertion_sort(items):
+def insertion_sort(items, reversed=False):
     """
     Sort given items by taking first unsorted item, inserting it in sorted
     order in front of items, and repeating until all items are in order.
@@ -101,6 +104,9 @@ def insertion_sort(items):
                 # print("break it")
                 break
     print(f"Insertion sort swaps: {swaps}")
+    if reversed:
+        items = items[::-1]
+        return items
     return items
 
 
@@ -113,13 +119,13 @@ if __name__ == "__main__":
     
     rand_nums = [50, 21, 95, 20, 89, 57, 87, 83, 89, 10]
     print(rand_nums)
-    bubble_sort = bubble_sort(rand_nums)
+    bubble_sort = bubble_sort(rand_nums, reversed=True)
     print(f"Bubble sort: {bubble_sort}")
     
-    rand_nums = [50, 21, 95, 20, 89, 57, 87, 83, 89, 10]
-    selection_sort = selection_sort(rand_nums)
-    print(f"Selection sort result: {selection_sort}")
+    # rand_nums = [50, 21, 95, 20, 89, 57, 87, 83, 89, 10]
+    # selection_sort = selection_sort(rand_nums, reversed=True)
+    # print(f"Selection sort result: {selection_sort}")
 
-    rand_nums = [50, 21, 95, 20, 89, 57, 87, 83, 89, 10]
-    insertion_sort = insertion_sort(rand_nums)
-    print(f"Insertion sort result: {insertion_sort}")
+    # rand_nums = [50, 21, 95, 20, 89, 57, 87, 83, 89, 10]
+    # insertion_sort = insertion_sort(rand_nums, reversed=True)
+    # print(f"Insertion sort result: {insertion_sort}")
