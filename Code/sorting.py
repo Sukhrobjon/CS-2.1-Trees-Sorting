@@ -29,7 +29,12 @@ def test_sorting(sort=bubble_sort, num_items=20, max_value=50):
 
     # Test the sorting algorithm and ensure the list is sorted afterward
     print('Sorting items with {}(items)'.format(sort.__name__))
+    
     sort(items)  # Note: sort should be a mutative function (modify input)
+    # TODO: how to fix the merge sort
+    if sort == merge_sort:
+        sorted_items = merge_sort(items)
+        sort = sorted_items[:]
     print('Sorted items:  {!r}'.format(items))
     print('Sorted order?  {!r}'.format(is_sorted(items)))
 
@@ -57,6 +62,9 @@ def main():
         sort_name = args[0]
         # Terrible hack abusing globals
         if sort_name in globals():
+            # if sort_name == merge_sort:
+            #     sorted_items = merge_sort(items)
+            #     sort_name = sorted_items[:]
             sort_function = globals()[sort_name]
         else:
             # Don't explode, just warn user and show list of sorting functions

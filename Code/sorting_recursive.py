@@ -97,7 +97,7 @@ def merge_sort(items):
     Running time: O(nlogn) in all cases, as we need to split the array
     approximately two equal parts in a O(logn) time and merge them back in O(n)
     run time. so overall O(nlogn)
-    Memory usage: O(nlogn) in all cases for recursive stack
+    # TODO: Memory usage: O(nlogn) for recursive stack. Is it for all cases? 
     
     Args:
         items(list): unsorted list of elements
@@ -142,9 +142,14 @@ def partition(items, low, high):
     Returns:
         pivot_index(int): the index of pivot point in the list
     """
-
-    # if len(items) > 3:
-    #     _find_median(items)
+    print(f"low: {low}, high {high}")
+    
+    if high - low >= 2:
+        print("items more than 3 element: ", items[low:high])
+        print(f"items before median: {items}")
+        _find_median(items, low, high)
+        print(f"items after: {items}")
+        
     
     # last element is the pivot
     pivot = items[high]
@@ -173,7 +178,7 @@ def quick_sort(items, low=None, high=None):
     around a pivot item and recursively sorting each remaining sublist range.
 
     Best and average case running time: O(nlogn) when two halves of the list
-    partitioned approximetely equal sizes.
+    partitioned approximetely in equal sizes.
 
     Worst case running time: O(n^2) when two halves of the list partitioned
     lopsided, where one side of the partition is much bigger than the other
@@ -185,6 +190,7 @@ def quick_sort(items, low=None, high=None):
     Best and average case memory usage: O(logn), this is the recursion stack
     paid by the language. Again this depends on how balanced of two halves
     of the list.
+    
     Worst case memory usage: O(n)
 
     Args:
@@ -206,17 +212,29 @@ def quick_sort(items, low=None, high=None):
         quick_sort(items, pivot_index + 1, high)
 
 
-# def find_median(items, low=0, high=len(items)):
-#     """Swap the items in the list so median will be at the end of the list"""
-#     # TODO: Ask about how to define median of low, mid, high???
-#     # find the median
-#     mid = low + (high - low) // 2
-#     if items[mid] < items[low]:
-#         items[mid], items[low] = items[low], items[mid]
-#     if items[high] < items[low]:
-#         items[high], items[low] = items[low], items[high]
-#     if items[mid] < items[high]:
-#         items[mid], items[high] = items[high], items[mid]
+def _find_median(items: list, low=None, high=None):
+    """
+    Find the median out of 3 numbers and swap the items in the list so median
+    will be at the end of the list
+
+    Args:
+        items(list): unsorted list
+        low(int): 0th index in the list
+        high(int): last index in the list
+    """
+    # set the initial values of low and high
+    if low is None and high is None:
+        low = 0
+        high = len(items) - 1
+    
+    mid = (high + low) // 2
+
+    if items[mid] < items[low]:
+        items[mid], items[low] = items[low], items[mid]
+    if items[high] < items[low]:
+        items[high], items[low] = items[low], items[high]
+    if items[mid] < items[high]:
+        items[mid], items[high] = items[high], items[mid]
 
 
 if __name__ == "__main__":
@@ -245,3 +263,8 @@ if __name__ == "__main__":
     quick_sort(items)
     print(splitter)
     print(f"Items after quick_sort recursively: {items}")
+
+    # items = [9, 11, 19]
+    # median = _find_median(items)
+    # print(f"median of {items} is {median}")
+
