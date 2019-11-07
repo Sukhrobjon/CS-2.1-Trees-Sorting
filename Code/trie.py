@@ -3,14 +3,15 @@
 
 class TrieNode(object):
     def __init__(self):
-        """Initializing the node with list of 10 digits from 0-9 and store price"""
+        """Initializing the node with list of 26 English uppercase alphabets A-Z"""
         self.digit = 0
 
-        # initializing 10 children for each node because there are 10 digits possible
-        self.children = [None] * 10
+        self.children = [None] * 26
         # self.children = {}  # key: digit, value: TrieNode (child)
-        # default price is 0
-        self.price = 0
+        
+        # NOTE: Ask which way is better to use
+        self.terminate = '$'  # termenation point/end of the string
+        self.terminal_node = False
         # to indicate we traverse all the digits in the route
         self.end_path = False
 
