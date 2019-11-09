@@ -45,7 +45,7 @@ class TrieTree(object):
 
         for index, digit in enumerate(route_number):
 
-            if node.children[int(digit)] == None:
+            if node.children[int(digit)] is None:
                 node.children[int(digit)] = TrieNode()
                 # sake of keeping track of digits
 
@@ -63,7 +63,8 @@ class TrieTree(object):
             node = node.children[int(digit)]
 
     def search(self, phone_number):
-        """Return a price for givin phone number searching through Trie structured routes"""
+        """Return a price for givin phone number searching through Trie
+        structured routes"""
         # start at the root
         node = self.root
         price = 0

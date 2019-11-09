@@ -2,14 +2,16 @@
 
 
 class PrefixTreeNode:
-    """PrefixTreeNode: A node for use in a prefix tree that stores a single
+    """
+    PrefixTreeNode: A node for use in a prefix tree that stores a single
     character from a string and a structure of children nodes below it, which
-    associates the next character in a string to the next node along its path from
-    the tree's root node to a terminal node that marks the end of the string."""
+    associates the next character in a string to the next node along its path
+    from the tree's root node to a terminal node that marks the end of the string.
+    """
 
     # Choose a type of data structure to store children nodes in
     # Hint: Choosing list or dict affects implementation of all child methods
-    CHILDREN_TYPE = None
+    # CHILDREN_TYPE = list()
 
     def __init__(self, character=None):
         """Initialize this prefix tree node with the given character value, an
@@ -17,28 +19,41 @@ class PrefixTreeNode:
         # Character that this node represents
         self.character = character
         # Data structure to associate character keys to children node values
-        self.children = PrefixTreeNode.CHILDREN_TYPE()
+        # TODO: changes this later to be more modular
+        # self.children = PrefixTreeNode.CHILDREN_TYPE()
+        self.children = [None] * 26
         # Marks if this node terminates a string in the prefix tree
         self.terminal = False
 
     def is_terminal(self):
         """Return True if this prefix tree node terminates a string."""
         # TODO: Determine if this node is terminal
+        return self.terminal == True
 
     def num_children(self):
         """Return the number of children nodes this prefix tree node has."""
         # TODO: Determine how many children this node has
+        count = 0
+        for child in self.children:
+            if child:
+                count += 1
+        return count
 
     def has_child(self, character):
         """Return True if this prefix tree node has a child node that
         represents the given character amongst its children."""
         # TODO: Check if given character is amongst this node's children
+        # get the position of that character
+        index = self._get_index(character)
+        # if there is a value(not None) in that index then we know it exists
+        return True if self.children[index] else False
 
     def get_child(self, character):
         """Return this prefix tree node's child node that represents the given
         character if it is amongst its children, or raise ValueError if not."""
         if self.has_child(character):
             # TODO: Find child node for given character in this node's children
+            pass
         else:
             raise ValueError(f'No child exists for character {character!r}')
 
@@ -47,6 +62,11 @@ class PrefixTreeNode:
         raise ValueError if given character is amongst this node's children."""
         if not self.has_child(character):
             # TODO: Add given character and child node to this node's children
+            # create a new node for this character
+            new_child = PrefixTreeNode(character)
+            index = self._get_index(character)
+
+            
         else:
             raise ValueError(f'Child exists for character {character!r}')
 
@@ -57,3 +77,13 @@ class PrefixTreeNode:
     def __str__(self):
         """Return a string view of this prefix tree node."""
         return f'({self.character})'
+
+    def _get_index(self, character):
+        """
+        Return a index position of character where it should be placed
+        in list of children.
+        NOTE: index of 'A' = 0 and 'Z' = 25 last element in the children list
+        """
+        OFFSET = 65  # ascii value of 'A' since we want to place
+        index = ord(character) - OFFSET
+        return index

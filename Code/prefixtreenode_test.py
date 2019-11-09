@@ -1,5 +1,4 @@
 #!python3
-
 from prefixtreenode import PrefixTreeNode
 import unittest
 
