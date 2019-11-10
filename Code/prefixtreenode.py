@@ -20,7 +20,7 @@ class PrefixTreeNode:
         empty structure of children nodes, and a boolean terminal property.
         """
         # Character that this node represents
-        self.character = character.upper()
+        self.character = character
         # Data structure to associate character keys to children node values
         # TODO: changes this later to be more modular
         self.children = PrefixTreeNode.CHILDREN_TYPE()

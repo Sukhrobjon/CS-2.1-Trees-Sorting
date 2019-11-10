@@ -28,7 +28,7 @@ class TrieTree(object):
         """Initialize trie tree with all routes"""
         self.root = TrieNode()
         self.size = 0
-        if routes != None:
+        if routes is not None:
             for route, price in routes:
                 self.add(route, price)
 
