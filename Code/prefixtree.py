@@ -39,28 +39,31 @@ class PrefixTree:
 
     def contains(self, string):
         """Return True if this prefix tree contains the given string."""
+        
         node = self._find_node(string)[0]
-
         return True if node else False
 
     def insert(self, string):
         """Insert the given string into this prefix tree."""
         # check if tree has current string
-        # if not self.contains(string):
-        node = self.root
-        for char in string:
-            # check if the current char is already exists, if so skip the char
-            if not node.has_child(char):
-                # create a child node to add
-                child_node = PrefixTreeNode(char)
-                # add the child node as a child to the current node
-                node.add_child(char, child_node)
-                # update the current node
-                node = child_node
-        node.terminal = True
-        # else:
-        #     print(f'String: {string} is already in the tree!')
-        self.size += 1
+        if not self.contains(string):
+            node = self.root
+            for char in string:
+                # check if the current char is already exists, if so skip the char
+                if not node.has_child(char):
+                    # create a child node to add
+                    child_node = PrefixTreeNode(char)
+                    # add the child node as a child to the current node
+                    node.add_child(char, child_node)
+                    # update the current node
+                    node = child_node
+            node.terminal = True
+            # increment the size by 1 once we inserted the whole string
+            self.size += 1
+        else:
+            print(f'String: {string} is already in the tree!')
+        
+
     def _find_node(self, string):
         """
         Return a tuple containing the node that terminates the given string
@@ -78,11 +81,12 @@ class PrefixTree:
             # check if the node has that child
             if node.has_child(char):
                 child_node = node.get_child(char)
-                depth += 1
-                # update the child node
-                node = child_node
-            elif not node.has_child(char):
-                node = None
+            # found last matching node in the tree, 
+            else:
+                return None, index
+
+            # update the child node
+            node = child_node
 
         return node, index + 1
 
@@ -161,5 +165,13 @@ if __name__ == '__main__':
         print('\n' + '='*80 + '\n')
         print(f'{name} tongue-twister:')
         create_prefix_tree(strings)
-    # strings = ['abc', 'ab']
-    # create_prefix_tree(strings)
+    # # strings = ['abc', 'ab']
+    # # create_prefix_tree(strings)
+
+    # s = 'abc'
+    # no_s = 'abcd'
+    # test_tree = PrefixTree()
+    # test_tree.insert(s)
+    # node_depth = test_tree._find_node(no_s)
+    # print(f"\nTesting _find_node(): {node_depth}")
+    # print(f"size: {test_tree.size}")

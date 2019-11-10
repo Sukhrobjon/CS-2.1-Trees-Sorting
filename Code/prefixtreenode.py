@@ -53,7 +53,7 @@ class PrefixTreeNode:
             index = self._get_index(character)
             # if there is a value(not None) in that position then we know it
             # exists
-            print(f'we see child exists => index: {index}, char: {character}')
+            # print(f'we see child exists => index: {index}, char: {character}')
             return self.children[index] is not None
         return False
 
@@ -64,7 +64,7 @@ class PrefixTreeNode:
         """
         if self.has_child(character):
             # TODO: Find child node for given character in this node's children
-            index = self._get_index(character)
+            index = self._get_index(character.upper())
             return self.children[index]
         else:
             raise ValueError(f'No child exists for character {character!r}')
