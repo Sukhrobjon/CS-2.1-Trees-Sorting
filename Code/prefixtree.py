@@ -51,26 +51,31 @@ class PrefixTree:
         """Insert the given string into this prefix tree."""
         # check if tree has current string
         # if not self.contains(string):
+        print(f"inserting: {string}")
         node = self.root
         for char in string:
             # check if the current char is already exists, if so skip the char
             # print(f"inserting char: {char}")
             char = char.upper()
-            if not node.has_child(char):
+            # check if node has child for char
+            if node.has_child(char) is False:
                 # create a child node to be added
                 child_node = PrefixTreeNode(char)
                 # add the child node as a child to the current node
                 node.add_child(char, child_node)
-                # print(f"inserting {string}: last char is: {child_node}")
+                print(f"node: {node}: new child node: {child_node}")
             else:
                 child_node = node.get_child(char)
+                print(f'child node is there: {child_node}')
             # update the current node always
             node = child_node
-        
+        # set the last char in the string as a terminal node
         node.terminal = True
+        print(f"inserted: {string}")
         # increment the size by 1 once we inserted the whole string
         self.size += 1
         self.all_words.append(string)
+        print(f"root: {self.root.children}")
         # else:
         #     print(f'String: {string} is already in the tree!')
         
@@ -95,12 +100,18 @@ class PrefixTree:
                 child_node = node.get_child(char)
             # found last matching node in the tree 
             else:
-                return None, index
+                break
 
             # update the child node
             node = child_node
-
-        return node, index + 1
+        print(f"last node: {node}")
+        # check for if last char is terminal to make sure for overlapping words
+        # e.g. there is string 'ABCD' and if we look for 'ABD' even though ABC
+        # is part of ABCD and in the tree, 'C' is not a terminal point 
+        if node.terminal:
+            return node, index + 1
+        else:
+            return None, index + 1
 
     def complete(self, prefix):
         """Return a list of all strings stored in this prefix tree that start
@@ -135,7 +146,7 @@ def create_prefix_tree(strings):
     print('\nInserting strings:')
     for string in strings:
         tree.insert(string)
-        print(f'insert({string!r}), size: {tree.size}')
+        # print(f'insert({string!r}), size: {tree.size}')
 
     print(f'\ntree: {tree}')
     print(f'root: {tree.root}')
@@ -146,13 +157,13 @@ def create_prefix_tree(strings):
         result = tree.contains(string)
         print(f'contains({string!r}): {result}')
 
-    # print('\nSearching for strings not in tree:')
-    # prefixes = sorted(set(string[:len(string)//2] for string in strings))
-    # for prefix in prefixes:
-    #     if len(prefix) == 0 or prefix in strings:
-    #         continue
-    #     result = tree.contains(prefix)
-    #     print(f'contains({prefix!r}): {result}')
+    print('\nSearching for strings not in tree:')
+    prefixes = sorted(set(string[:len(string)//2] for string in strings))
+    for prefix in prefixes:
+        if len(prefix) == 0 or prefix in strings:
+            continue
+        result = tree.contains(prefix)
+        print(f'contains({prefix!r}): {result}')
 
     # print('\nCompleting prefixes in tree:')
     # for prefix in prefixes:
@@ -174,6 +185,7 @@ if __name__ == '__main__':
         # 'Woodchuck': ('How much wood would a wood chuck chuck'
         #                ' if a wood chuck could chuck wood').split()
     }
+    
     # Create a prefix tree with the similar words in each tongue-twister
     for name, strings in tongue_twisters.items():
         print('\n' + '='*80 + '\n')
