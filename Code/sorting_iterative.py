@@ -40,8 +40,6 @@ def bubble_sort(items, reversed=False):
     return items
     
 
-
-
 def selection_sort(items, reversed=False):
     """
     Sort given items by finding minimum item, swapping it with first
@@ -86,6 +84,7 @@ def insertion_sort(items, reversed=False):
         items(list): inplace sorted list
     """
     swaps = 0
+    # i is the index of the last sorted item in the array
     for i in range(1, len(items)):
         # first unsorted item on the right side of the last sorted item
         for j in range(i-1, -1, -1):
@@ -110,7 +109,6 @@ def insertion_sort(items, reversed=False):
     return items
 
 
-# to bubble sort
 if __name__ == "__main__":
     sorted_items = [3, 4, 6, 7, 7, 9, 11, 15, 18, 20]
     unsorted_items = [3, 15, 4, 7, 20, 6, 18, 9, 7]

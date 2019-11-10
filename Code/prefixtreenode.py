@@ -12,7 +12,7 @@ class PrefixTreeNode:
 
     # Choose a type of data structure to store children nodes in
     # Hint: Choosing list or dict affects implementation of all child methods
-    CHILDREN_TYPE = list()
+    CHILDREN_TYPE = list
 
     def __init__(self, character=None):
         """
@@ -20,17 +20,17 @@ class PrefixTreeNode:
         empty structure of children nodes, and a boolean terminal property.
         """
         # Character that this node represents
-        self.character = character
+        self.character = character.upper()
         # Data structure to associate character keys to children node values
         # TODO: changes this later to be more modular
-        self.children = PrefixTreeNode.CHILDREN_TYPE
+        self.children = PrefixTreeNode.CHILDREN_TYPE()
         # self.children = [None] * 26
         # Marks if this node terminates a string in the prefix tree
         self.terminal = False
 
     def is_terminal(self):
         """Return True if this prefix tree node terminates a string."""
-        return True if self.terminal else False
+        return self.terminal
 
     def num_children(self):
         """Return the number of children nodes this prefix tree node has."""
@@ -52,7 +52,7 @@ class PrefixTreeNode:
             index = self._get_index(character)
             # if there is a value(not None) in that position then we know it
             # exists
-            return True if self.children[index] else False
+            return self.children[index] is not None
         return False
 
     def get_child(self, character):
@@ -72,6 +72,12 @@ class PrefixTreeNode:
         Add the given character and child node as a child of this node, or
         raise ValueError if given character is amongst this node's children.
         """
+        # make sure character is uppercase
+        character = character.upper()
+        # TODO: Should I consider check if char is english letter?
+        if not character.isalpha():
+            raise ValueError(f'Child can be only English letters!')
+
         if not self.has_child(character):
             # create a new node for this character
             # child_node = PrefixTreeNode(character)
@@ -103,10 +109,10 @@ class PrefixTreeNode:
 
 
 if __name__ == "__main__":
-    node = PrefixTreeNode('A')
-    print(type(node.children))
-    print(type(PrefixTreeNode.CHILDREN_TYPE))
-    node_B = PrefixTreeNode('B')
-    node.add_child('B', node_B)
-    print(node.get_child('B'))
-    print(node.children)
+    node = PrefixTreeNode('a')
+    print(node)
+    node_B = PrefixTreeNode('b')
+    node.add_child('b', node_B)
+    print(node_B)
+    # print(node.get_child('b'))
+   

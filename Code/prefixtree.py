@@ -35,27 +35,46 @@ class PrefixTree:
 
     def is_empty(self):
         """Return True if this prefix tree is empty (contains no strings)."""
-        # TODO
+        return self.size == 0
 
     def contains(self, string):
         """Return True if this prefix tree contains the given string."""
-        # TODO
+        node = self._find_node(string)[0]
+
+        return True if node else False
 
     def insert(self, string):
         """Insert the given string into this prefix tree."""
-        # TODO
+        # check if tree has current string
+        if not self.contains(string):
+            node = self.root
+            for char in string:
+                # create a child node to add
+                child_node = PrefixTreeNode(char)
+                # add the child node as a child to the current node
+                node.add_child(char, child_node)
+                # update the current node
+                node = child_node
+            node.terminal = True
+        else:
+            print(f'String: {string} is already in the tree!')
 
     def _find_node(self, string):
-        """Return a tuple containing the node that terminates the given string
+        """
+        Return a tuple containing the node that terminates the given string
         in this prefix tree and the node's depth, or if the given string is not
         completely found, return None and the depth of the last matching node.
-        Search is done iteratively with a loop starting from the root node."""
+        Search is done iteratively with a loop starting from the root node.
+        """
         # Match the empty string
         if len(string) == 0:
             return self.root, 0
         # Start with the root node
         node = self.root
-        # TODO
+        depth = 0
+        
+        
+        
 
     def complete(self, prefix):
         """Return a list of all strings stored in this prefix tree that start
@@ -71,8 +90,10 @@ class PrefixTree:
         # TODO
 
     def _traverse(self, node, prefix, visit):
-        """Traverse this prefix tree with recursive depth-first traversal.
-        Start at the given node and visit each node with the given function."""
+        """
+        Traverse this prefix tree with recursive depth-first traversal.
+        Start at the given node and visit each node with the given function.
+        """
         # TODO
 
 
