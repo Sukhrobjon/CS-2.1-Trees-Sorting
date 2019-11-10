@@ -193,25 +193,25 @@ class PrefixTreeTest(unittest.TestCase):
         tree.insert('XYZ')
         assert tree.size == 4
 
-    # def test_contains(self):
-    #     strings = ['ABC', 'ABD', 'A', 'XYZ']
-    #     tree = PrefixTree(strings)
-    #     # Verify contains for all substrings
-    #     assert tree.contains('ABC') is True
-    #     assert tree.contains('ABD') is True
-    #     assert tree.contains('AB') is False
-    #     assert tree.contains('BC') is False
-    #     assert tree.contains('BD') is False
-    #     assert tree.contains('A') is True
-    #     assert tree.contains('B') is False
-    #     assert tree.contains('C') is False
-    #     assert tree.contains('D') is False
-    #     assert tree.contains('XYZ') is True
-    #     assert tree.contains('XY') is False
-    #     assert tree.contains('YZ') is False
-    #     assert tree.contains('X') is False
-    #     assert tree.contains('Y') is False
-    #     assert tree.contains('Z') is False
+    def test_contains(self):
+        strings = ['ABC', 'ABD', 'A', 'XYZ']
+        tree = PrefixTree(strings)
+        # Verify contains for all substrings
+        assert tree.contains('ABC') is True
+        assert tree.contains('ABD') is True
+        assert tree.contains('AB') is False
+        assert tree.contains('BC') is False
+        assert tree.contains('BD') is False
+        assert tree.contains('A') is True
+        assert tree.contains('B') is False
+        assert tree.contains('C') is False
+        assert tree.contains('D') is False
+        assert tree.contains('XYZ') is True
+        assert tree.contains('XY') is False
+        assert tree.contains('YZ') is False
+        assert tree.contains('X') is False
+        assert tree.contains('Y') is False
+        assert tree.contains('Z') is False
 
     # def test_complete(self):
     #     strings = ['ABC', 'ABD', 'A', 'XYZ']

@@ -22,11 +22,15 @@ class PrefixTreeNode:
         # Character that this node represents
         self.character = character
         # Data structure to associate character keys to children node values
-        # TODO: changes this later to be more modular
         self.children = PrefixTreeNode.CHILDREN_TYPE()
+        # TODO: changes this later to be more modular
+        # we need this, if we dont initialize the children when we create a node
+        # we are losing the actual ask which way is better/right
         self.children = [None] * 26
         # Marks if this node terminates a string in the prefix tree
         self.terminal = False
+        # storing full word
+        self.full_word = ''
 
     def is_terminal(self):
         """Return True if this prefix tree node terminates a string."""
@@ -37,6 +41,7 @@ class PrefixTreeNode:
         # TODO: Determine how many children this node has
         count = 0
         for child in self.children:
+            # if not none 
             if child:
                 count += 1
         return count
