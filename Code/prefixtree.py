@@ -16,7 +16,7 @@ class PrefixTree:
     tree's root node to a terminal node that marks the end of the string."""
 
     # Constant for the start character stored in the prefix tree's root node
-    START_CHARACTER = ''
+    START_CHARACTER = '^'
 
     def __init__(self, strings=None):
         """Initialize this prefix tree and insert the given strings, if any."""
@@ -46,19 +46,21 @@ class PrefixTree:
     def insert(self, string):
         """Insert the given string into this prefix tree."""
         # check if tree has current string
-        if not self.contains(string):
-            node = self.root
-            for char in string:
+        # if not self.contains(string):
+        node = self.root
+        for char in string:
+            # check if the current char is already exists, if so skip the char
+            if not node.has_child(char):
                 # create a child node to add
                 child_node = PrefixTreeNode(char)
                 # add the child node as a child to the current node
                 node.add_child(char, child_node)
                 # update the current node
                 node = child_node
-            node.terminal = True
-        else:
-            print(f'String: {string} is already in the tree!')
-
+        node.terminal = True
+        # else:
+        #     print(f'String: {string} is already in the tree!')
+        self.size += 1
     def _find_node(self, string):
         """
         Return a tuple containing the node that terminates the given string
@@ -71,10 +73,18 @@ class PrefixTree:
             return self.root, 0
         # Start with the root node
         node = self.root
-        depth = 0
-        
-        
-        
+
+        for index, char in enumerate(string):
+            # check if the node has that child
+            if node.has_child(char):
+                child_node = node.get_child(char)
+                depth += 1
+                # update the child node
+                node = child_node
+            elif not node.has_child(char):
+                node = None
+
+        return node, index + 1
 
     def complete(self, prefix):
         """Return a list of all strings stored in this prefix tree that start
@@ -110,32 +120,32 @@ def create_prefix_tree(strings):
         tree.insert(string)
         print(f'insert({string!r}), size: {tree.size}')
 
-    print(f'\ntree: {tree}')
-    print(f'root: {tree.root}')
+    # print(f'\ntree: {tree}')
+    # print(f'root: {tree.root}')
 
-    print('\nSearching for strings in tree:')
-    for string in sorted(set(strings)):
-        result = tree.contains(string)
-        print(f'contains({string!r}): {result}')
+    # print('\nSearching for strings in tree:')
+    # for string in sorted(set(strings)):
+    #     result = tree.contains(string)
+    #     print(f'contains({string!r}): {result}')
 
-    print('\nSearching for strings not in tree:')
-    prefixes = sorted(set(string[:len(string)//2] for string in strings))
-    for prefix in prefixes:
-        if len(prefix) == 0 or prefix in strings:
-            continue
-        result = tree.contains(prefix)
-        print(f'contains({prefix!r}): {result}')
+    # print('\nSearching for strings not in tree:')
+    # prefixes = sorted(set(string[:len(string)//2] for string in strings))
+    # for prefix in prefixes:
+    #     if len(prefix) == 0 or prefix in strings:
+    #         continue
+    #     result = tree.contains(prefix)
+    #     print(f'contains({prefix!r}): {result}')
 
-    print('\nCompleting prefixes in tree:')
-    for prefix in prefixes:
-        completions = tree.complete(prefix)
-        print(f'complete({prefix!r}): {completions}')
+    # print('\nCompleting prefixes in tree:')
+    # for prefix in prefixes:
+    #     completions = tree.complete(prefix)
+    #     print(f'complete({prefix!r}): {completions}')
 
-    print('\nRetrieving all strings:')
-    retrieved_strings = tree.strings()
-    print(f'strings: {retrieved_strings}')
-    matches = set(retrieved_strings) == set(strings)
-    print(f'matches? {matches}')
+    # print('\nRetrieving all strings:')
+    # retrieved_strings = tree.strings()
+    # print(f'strings: {retrieved_strings}')
+    # matches = set(retrieved_strings) == set(strings)
+    # print(f'matches? {matches}')
 
 
 if __name__ == '__main__':
@@ -151,3 +161,5 @@ if __name__ == '__main__':
         print('\n' + '='*80 + '\n')
         print(f'{name} tongue-twister:')
         create_prefix_tree(strings)
+    # strings = ['abc', 'ab']
+    # create_prefix_tree(strings)

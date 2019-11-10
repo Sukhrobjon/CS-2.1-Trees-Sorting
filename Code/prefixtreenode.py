@@ -48,10 +48,12 @@ class PrefixTreeNode:
         """
         # get the position of that character
         if self.num_children() > 0:
+            character = character.upper()
             # get the character position the children list
             index = self._get_index(character)
             # if there is a value(not None) in that position then we know it
             # exists
+            print(f'we see child exists => index: {index}, char: {character}')
             return self.children[index] is not None
         return False
 
@@ -76,7 +78,7 @@ class PrefixTreeNode:
         character = character.upper()
         # TODO: Should I consider check if char is english letter?
         if not character.isalpha():
-            raise ValueError(f'Child can be only English letters!')
+            raise ValueError(f'Child can only be English letters!')
 
         if not self.has_child(character):
             # create a new node for this character
