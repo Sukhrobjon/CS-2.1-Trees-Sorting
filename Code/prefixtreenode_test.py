@@ -12,7 +12,10 @@ class PrefixTreeNodeTest(unittest.TestCase):
         assert isinstance(node.character, str)
         assert node.character is character
         # Verify children nodes structure
+        # TODO: check this is not working
         # assert isinstance(node.children, PrefixTreeNode.CHILDREN_TYPE)
+        # this is what the above line supposed to accomplish
+        assert isinstance(node.children, list)
         assert len(node.children) == 0
         assert node.children == PrefixTreeNode.CHILDREN_TYPE
         # Verify terminal boolean

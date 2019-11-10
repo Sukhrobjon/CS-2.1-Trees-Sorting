@@ -6,7 +6,8 @@ class PrefixTreeNode:
     PrefixTreeNode: A node for use in a prefix tree that stores a single
     character from a string and a structure of children nodes below it, which
     associates the next character in a string to the next node along its path
-    from the tree's root node to a terminal node that marks the end of the string.
+    from the tree's root node to a terminal node that marks the end of the
+    string.
     """
 
     # Choose a type of data structure to store children nodes in
@@ -14,8 +15,10 @@ class PrefixTreeNode:
     CHILDREN_TYPE = list()
 
     def __init__(self, character=None):
-        """Initialize this prefix tree node with the given character value, an
-        empty structure of children nodes, and a boolean terminal property."""
+        """
+        Initialize this prefix tree node with the given character value, an
+        empty structure of children nodes, and a boolean terminal property.
+        """
         # Character that this node represents
         self.character = character
         # Data structure to associate character keys to children node values
@@ -27,8 +30,7 @@ class PrefixTreeNode:
 
     def is_terminal(self):
         """Return True if this prefix tree node terminates a string."""
-        # TODO: Determine if this node is terminal
-        return self.terminal == True
+        return True if self.terminal else False
 
     def num_children(self):
         """Return the number of children nodes this prefix tree node has."""
@@ -40,20 +42,24 @@ class PrefixTreeNode:
         return count
 
     def has_child(self, character):
-        """Return True if this prefix tree node has a child node that
-        represents the given character amongst its children."""
+        """
+        Return True if this prefix tree node has a child node that
+        represents the given character amongst its children.
+        """
         # get the position of that character
         if self.num_children() > 0:
-
+            # get the character position the children list
             index = self._get_index(character)
-            # if there is a value(not None) in that index then we know it
+            # if there is a value(not None) in that position then we know it
             # exists
             return True if self.children[index] else False
         return False
 
     def get_child(self, character):
-        """Return this prefix tree node's child node that represents the given
-        character if it is amongst its children, or raise ValueError if not."""
+        """
+        Return this prefix tree node's child node that represents the given
+        character if it is amongst its children, or raise ValueError if not.
+        """
         if self.has_child(character):
             # TODO: Find child node for given character in this node's children
             index = self._get_index(character)
@@ -62,11 +68,13 @@ class PrefixTreeNode:
             raise ValueError(f'No child exists for character {character!r}')
 
     def add_child(self, character, child_node):
-        """Add the given character and child node as a child of this node, or
-        raise ValueError if given character is amongst this node's children."""
+        """
+        Add the given character and child node as a child of this node, or
+        raise ValueError if given character is amongst this node's children.
+        """
         if not self.has_child(character):
-            # TODO: Add given character and child node to this node's children
             # create a new node for this character
+            # child_node = PrefixTreeNode(character)
             index = self._get_index(character)
             # create empty list for children
             self.children = [None] * 26
@@ -89,14 +97,15 @@ class PrefixTreeNode:
         in list of children.
         NOTE: index of 'A' = 0 and 'Z' = 25 last element in the children list
         """
-        OFFSET = 65  # ascii value of 'A' since we want to place
+        OFFSET = 65  # ascii value of 'A' since the first element should be 'A'
         index = ord(character) - OFFSET
         return index
 
 
 if __name__ == "__main__":
     node = PrefixTreeNode('A')
-    print(node.children)
+    print(type(node.children))
+    print(type(PrefixTreeNode.CHILDREN_TYPE))
     node_B = PrefixTreeNode('B')
     node.add_child('B', node_B)
     print(node.get_child('B'))
