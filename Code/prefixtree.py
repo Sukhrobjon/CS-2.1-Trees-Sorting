@@ -121,7 +121,12 @@ class PrefixTree:
         # Create a list of completions in prefix tree
         # completions = []
         prefix = prefix.upper()
+        if prefix == '':
+            return self.strings()
         last_prefix_node = self._find_prefix(prefix)
+        if last_prefix_node is self.root:
+            return []
+        print(f"last node in prefix: {last_prefix_node}")
         items = []
         if not self.is_empty():
             self._traverse(last_prefix_node, prefix[:-1], items.append)
@@ -175,7 +180,7 @@ class PrefixTree:
                 child_node = node.get_child(char)
             # found last matching node in the tree
             else:
-                return node, index
+                return node
 
             # update the child node
             node = child_node
