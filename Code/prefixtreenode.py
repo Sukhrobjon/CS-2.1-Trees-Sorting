@@ -29,7 +29,7 @@ class PrefixTreeNode:
         self.children = [None] * 26
         # Marks if this node terminates a string in the prefix tree
         self.terminal = False
-        # storing full word
+        # storing full word at the terminal node
         self.full_word = ''
 
     def is_terminal(self):
@@ -41,7 +41,7 @@ class PrefixTreeNode:
         # TODO: Determine how many children this node has
         count = 0
         for child in self.children:
-            # if not none 
+            # if child not none
             if child:
                 count += 1
         return count

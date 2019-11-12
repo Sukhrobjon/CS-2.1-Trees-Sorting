@@ -232,7 +232,7 @@ class PrefixTreeTest(unittest.TestCase):
         assert tree.complete('X') == ['XYZ']
         assert tree.complete('Y') == []
         assert tree.complete('Z') == []
-        assert tree.complete('') == ['ABC', 'ABD', 'A', 'XYZ']
+        assert tree.complete('') == sorted(['ABC', 'ABD', 'A', 'XYZ'])
 
     def test_strings(self):
         tree = PrefixTree()
