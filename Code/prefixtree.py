@@ -136,7 +136,7 @@ class PrefixTree:
         if not self.is_empty():
             for child in self.root.children:
                 if child:
-                    self._traverse(child, prefix+child.character, all_strings.append)
+                    self._traverse(child, prefix, all_strings.append)
         print(f"all items retrived from the root: {all_strings}")
         return self.all_words
 
@@ -234,6 +234,7 @@ def create_prefix_tree(strings):
     print('\nCompleting prefixes in tree:')
     for prefix in prefixes:
         completions = tree.complete(prefix)
+
         print(f'complete({prefix!r}): {completions}')
 
     print('\nRetrieving all strings:')
