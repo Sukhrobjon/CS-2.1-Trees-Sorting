@@ -9,7 +9,7 @@ def get_lines(filename='/usr/share/dict/words'):
     any leading and trailing whitespace characters removed from each line."""
     # Open file and remove whitespace from each line
     with open(filename) as file:
-        lines = [line.strip() for line in file]
+        lines = [line.upper().strip() for line in file]
     return lines
 
 
@@ -19,19 +19,19 @@ def generate_prefixes(vocabulary):
     return set(word[:len(word)//2] for word in vocabulary)
 
 
-def autocomplete_setup(vocabulary, algorithm='linear_search'):
+def autocomplete_setup(vocabulary, algorithm='trie'):
     """Return the main data structure needed to set up autocomplete using the
     given vocabulary and algorithm, specified as linear_search, trie, etc."""
     if algorithm == 'linear_search':
         # Use the given vocabulary list
         return vocabulary
     elif algorithm == 'trie':
-        from trie import Trie
+        from prefixtree import PrefixTree
         # Create a trie structure with the vocabulary
-        return Trie(vocabulary)
+        return PrefixTree(vocabulary)
 
 
-def autocomplete(prefix, structure, algorithm='linear_search'):
+def autocomplete(prefix, structure, algorithm='trie'):
     """Return all vocabulary entries that start with the given prefix using the
     given structure and algorithm, specified as linear_search, trie, etc."""
     if algorithm == 'linear_search':
@@ -39,7 +39,7 @@ def autocomplete(prefix, structure, algorithm='linear_search'):
         return [word for word in structure if word.startswith(prefix)]
     elif algorithm == 'trie':
         # Search the trie structure for the prefix
-        return structure.search(prefix)
+        return structure.complete(prefix)
 
 
 def main():
@@ -112,3 +112,4 @@ def main():
 
 if __name__ == '__main__':
     main()
+    # print(len(get_lines()) == len(set(get_lines())))

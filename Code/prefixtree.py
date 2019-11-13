@@ -44,9 +44,8 @@ class PrefixTree:
         Args:
             string(str): string to be searched in tree
         """
-
-        node_and_depth = self._find_terminal_node(string)
-        return True if node_and_depth[0] else False
+        node, _ = self._find_terminal_node(string)
+        return node is not None
 
     def insert(self, string):
         """Insert the given string into this prefix tree."""
@@ -57,7 +56,10 @@ class PrefixTree:
             for char in string:
                 # check if the current char is already exists, if so skip the char
                 # print(f"inserting char: {char}")
-                char = char.upper()
+                if char.isalpha():
+                    char = char.upper()
+                else:
+                    continue
                 # check if node has child for char
                 if not node.has_child(char):
                     # create a child node to be added
@@ -79,8 +81,8 @@ class PrefixTree:
             # print(f"inserted: {string}")
             # increment the size by 1 once we inserted the whole string
             self.size += 1
-        else:
-            print(f'String: {string} is already in the tree!')
+        # else:
+        #     print(f'String: {string} is already in the tree!')
         
     def _find_terminal_node(self, string):
         """
@@ -146,7 +148,7 @@ class PrefixTree:
         prefix = ""
         if not self.is_empty():
             for child in self.root.children:
-                if child:
+                if child is not None:
                     self._traverse(child, prefix, all_strings.append)
         # print(f"all items retrived from the root: {all_strings}")
         return all_strings

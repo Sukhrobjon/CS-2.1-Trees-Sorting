@@ -30,7 +30,6 @@ class PrefixTreeNode:
         # Marks if this node terminates a string in the prefix tree
         self.terminal = False
         # storing full word at the terminal node
-        self.full_word = ''
 
     def is_terminal(self):
         """Return True if this prefix tree node terminates a string."""
