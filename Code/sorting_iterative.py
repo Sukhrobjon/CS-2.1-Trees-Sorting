@@ -86,20 +86,15 @@ def insertion_sort(items, reversed=False):
     swaps = 0
     # i is the index of the last sorted item in the array
     for i in range(1, len(items)):
-        # first unsorted item on the right side of the last sorted item
+        # j + 1 is first unsorted item on the right side of the list
         for j in range(i-1, -1, -1):
-            # if the unsorted item is less the sorted element in the list
+            # if the unsorted item is less than the sorted element in the list
             # swap their position
-            # print(f"j+1: {items[j+1]}, j: {items[j]}")
-            # print(f"j: {j}")
             if items[j] > items[j+1]:
                 # print(f"items before swap: {items}")
                 items[j], items[j+1] = items[j+1], items[j]
                 swaps += 1
-                # print(f"items after swap: {items}")
-            # found the right spot for the unsorted item in the sorted part
-            # of the list
-            else:
+            else:  # found the right spot
                 # print("break it")
                 break
     print(f"Insertion sort swaps: {swaps}")
@@ -110,20 +105,20 @@ def insertion_sort(items, reversed=False):
 
 
 if __name__ == "__main__":
-    sorted_items = [3, 4, 6, 7, 7, 9, 11, 15, 18, 20]
-    unsorted_items = [3, 15, 4, 7, 20, 6, 18, 9, 7]
-    sample = [6, 2, 4, 3]
+    # sorted_items = [3, 4, 6, 7, 7, 9, 11, 15, 18, 20]
+    # unsorted_items = [3, 15, 4, 7, 20, 6, 18, 9, 7]
+    # sample = [6, 2, 4, 3]
     # rand_nums = [random.randint(1, 100) for i in range(10)]
     
-    rand_nums = [50, 21, 95, 20, 89, 57, 87, 83, 89, 10]
-    print(rand_nums)
-    bubble_sort = bubble_sort(rand_nums, reversed=True)
-    print(f"Bubble sort: {bubble_sort}")
+    # rand_nums = [50, 21, 95, 20, 89, 57, 87, 83, 89, 10]
+    # print(rand_nums)
+    # bubble_sort = bubble_sort(rand_nums, reversed=True)
+    # print(f"Bubble sort: {bubble_sort}")
     
     # rand_nums = [50, 21, 95, 20, 89, 57, 87, 83, 89, 10]
     # selection_sort = selection_sort(rand_nums, reversed=True)
     # print(f"Selection sort result: {selection_sort}")
 
-    # rand_nums = [50, 21, 95, 20, 89, 57, 87, 83, 89, 10]
-    # insertion_sort = insertion_sort(rand_nums, reversed=True)
-    # print(f"Insertion sort result: {insertion_sort}")
+    rand_nums = [50, 21, 95, 20, 89, 57, 87, 83, 89, 10]
+    insertion_sort = insertion_sort(rand_nums, reversed=False)
+    print(f"Insertion sort result: {insertion_sort}")
