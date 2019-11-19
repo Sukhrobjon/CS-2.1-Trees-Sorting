@@ -322,11 +322,11 @@ def get_sort_function():
 
 
 # If using PyTest, change this variable to the sort function you want to test
-sort = bubble_sort
+sort = merge_sort
 
-if sort == merge_sort:
-    sorted_items = merge_sort(items)
-    sort = sorted_items[:]
+# if sort == merge_sort:
+#     sorted_items = merge_sort
+#     sort = sorted_items[:]
 
 
 if __name__ == '__main__':

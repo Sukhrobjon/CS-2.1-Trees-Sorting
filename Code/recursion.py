@@ -1,5 +1,6 @@
 #!python
 
+
 def fibonacci(n):
     """fibonacci(n) returns the n-th number in the Fibonacci sequence,
     which is defined with the recurrence relation:

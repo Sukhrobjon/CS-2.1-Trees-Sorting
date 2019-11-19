@@ -55,7 +55,6 @@ class PrefixTree:
             node = self.root
             for char in string:
                 # check if the current char is already exists, if so skip the char
-                # print(f"inserting char: {char}")
                 if char.isalpha():
                     char = char.upper()
                 else:
@@ -75,14 +74,12 @@ class PrefixTree:
                 node = child_node
             # set the last char in the string as a terminal node
             node.terminal = True
-            # attach the string to the last node
-            node.full_word = string
-            
+          
             # print(f"inserted: {string}")
             # increment the size by 1 once we inserted the whole string
             self.size += 1
-        # else:
-        #     print(f'String: {string} is already in the tree!')
+        else:
+            print(f'String: {string} is already in the tree!')
         
     def _find_terminal_node(self, string):
         """
@@ -121,37 +118,25 @@ class PrefixTree:
         else:
             return None, index + 1
 
-    def complete(self, prefix):
+    def complete(self, prefix=''):
         """Return a list of all strings stored in this prefix tree that start
         with the given prefix string."""
-        # Create a list of completions in prefix tree
-        prefix = prefix.upper()
-        if prefix == '':
-            return self.strings()
         
+        # get the last node of the prefix 
         last_prefix_node = self._find_prefix(prefix)
-        if last_prefix_node is self.root:
-            return []
 
+        # completion list
         completions = []
-        # print(f"last node in prefix: {last_prefix_node}")
+        
         if not self.is_empty():
-            self._traverse(last_prefix_node, prefix[:-1], completions.append)
+            self._traverse(last_prefix_node, prefix, completions.append)
 
         return completions
 
     def strings(self):
         """Return a list of all strings stored in this prefix tree."""
-        # Create a list of all strings in prefix tree
-        all_strings = []
-        # set the prefix to empty str so traversal starts at the root
-        prefix = ""
-        if not self.is_empty():
-            for child in self.root.children:
-                if child is not None:
-                    self._traverse(child, prefix, all_strings.append)
-        # print(f"all items retrived from the root: {all_strings}")
-        return all_strings
+        # complete all elements
+        return self.complete()
 
     def _traverse(self, node, prefix, visit):
         """
@@ -160,11 +145,11 @@ class PrefixTree:
         """
         # base case.
         if node.terminal:
-            visit(prefix+node.character)
+            visit(prefix)
     
         for child in node.children:
-            if child:
-                self._traverse(child, prefix+node.character, visit)
+            if child is not None:
+                self._traverse(child, prefix+child.character, visit)
             
     def _find_prefix(self, prefix):
         """

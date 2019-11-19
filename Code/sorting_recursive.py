@@ -111,11 +111,16 @@ def merge_sort(items):
         return items
 
     mid = len(items) // 2
-    items_1 = merge_sort(items[0:mid])
-    items_2 = merge_sort(items[mid:])
+    items_1 = items[0:mid]
+    items_2 = items[mid:]
+
+    merge_sort(items_1)
+    merge_sort(items_2)
     print(f"items_1: {items_1}, items_2: {items_2}")
 
-    return merge(items_1, items_2)
+    merged_items = merge(items_1, items_2)
+    # copies the sorted part each time
+    items[:] = merged_items
 
 
 def partition(items, low, high):
