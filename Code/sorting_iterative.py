@@ -94,7 +94,7 @@ def insertion_sort(items, reversed=False):
                 # print(f"items before swap: {items}")
                 items[j], items[j+1] = items[j+1], items[j]
                 swaps += 1
-            else:  # found the right spot
+            else:  # found the right spot for unsorted item
                 # print("break it")
                 break
     print(f"Insertion sort swaps: {swaps}")
@@ -110,15 +110,15 @@ if __name__ == "__main__":
     # sample = [6, 2, 4, 3]
     # rand_nums = [random.randint(1, 100) for i in range(10)]
     
-    # rand_nums = [50, 21, 95, 20, 89, 57, 87, 83, 89, 10]
-    # print(rand_nums)
-    # bubble_sort = bubble_sort(rand_nums, reversed=True)
-    # print(f"Bubble sort: {bubble_sort}")
+    rand_nums = [50, 21, 95, 20, 89, 57, 87, 83, 89, 10]
+    print(rand_nums)
+    bubble_sort = bubble_sort(rand_nums, reversed=False)
+    print(f"Bubble sort: {bubble_sort}")
     
     # rand_nums = [50, 21, 95, 20, 89, 57, 87, 83, 89, 10]
     # selection_sort = selection_sort(rand_nums, reversed=True)
     # print(f"Selection sort result: {selection_sort}")
 
-    rand_nums = [50, 21, 95, 20, 89, 57, 87, 83, 89, 10]
-    insertion_sort = insertion_sort(rand_nums, reversed=False)
-    print(f"Insertion sort result: {insertion_sort}")
+    # rand_nums = [50, 21, 95, 20, 89, 57, 87, 83, 89, 10]
+    # insertion_sort = insertion_sort(rand_nums, reversed=False)
+    # print(f"Insertion sort result: {insertion_sort}")

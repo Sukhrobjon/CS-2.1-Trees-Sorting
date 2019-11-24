@@ -145,6 +145,7 @@ class PrefixTree:
         """
         # base case.
         if node.terminal:
+            # prefix is now whole word
             visit(prefix)
     
         for child in node.children:

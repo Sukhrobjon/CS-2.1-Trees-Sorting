@@ -97,7 +97,8 @@ def merge_sort(items):
     Running time: O(nlogn) in all cases, as we need to split the array
     approximately two equal parts in a O(logn) time and merge them back in O(n)
     run time. so overall O(nlogn)
-    # TODO: Memory usage: O(nlogn) for recursive stack. Is it for all cases? 
+    Memory usage: O(nlogn) for recursive stack. (it could be reduced down to
+    O(n)). 
     
     Args:
         items(list): unsorted list of elements
