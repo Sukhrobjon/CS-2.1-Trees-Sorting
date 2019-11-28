@@ -86,8 +86,8 @@ def split_sort_merge(items):
 
     # now merge two sorted arrays
     merged_list = merge(items_1, items_2)  # O(n+m) = O(N)
-    # items = merged_list.copy()
-    return merged_list
+    # to make sorting in place
+    items[:] = merged_list
 
 
 def merge_sort(items):
