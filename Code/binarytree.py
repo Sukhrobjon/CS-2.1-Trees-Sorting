@@ -72,7 +72,7 @@ class BinarySearchTree(object):
         """Return the height of this tree (the number of edges on the longest
         downward path from this tree's root node to a descendant leaf node).
         Best and worst case running time: O(n) it has to recursively call
-        the height method on every node while traversing down trees"""
+        the height method on every node while traversing down tree"""
         # Check if root node has a value and if so calculate its height
         return 0 if self.is_empty() else self.root.height()
 

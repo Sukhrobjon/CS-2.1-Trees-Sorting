@@ -44,7 +44,7 @@ class TestBinaryMinHeap(unittest.TestCase):
         for index, item in enumerate(items):
             heap.insert(item)
             assert heap.size() == index + 1
-            min_item = min(items[: index + 1])
+            min_item = min(items[:index + 1])
             assert heap.get_min() == min_item
         assert heap.size() == len(items)
 
