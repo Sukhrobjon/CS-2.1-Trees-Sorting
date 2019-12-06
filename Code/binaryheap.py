@@ -2,10 +2,12 @@
 
 
 class BinaryMinHeap(object):
-    """BinaryMinHeap: a partially ordered collection with efficient methods to
+    """
+    BinaryMinHeap: a partially ordered collection with efficient methods to
     insert new items in partial order and to access and remove its minimum item
     Items are stored in a dynamic array that implicitly represents a complete
-    binary tree with root node at index 0 and last leaf node at index n-1."""
+    binary tree with root node at index 0 and last leaf node at index n-1.
+    """
 
     def __init__(self, items=None):
         """Initialize this heap and insert the given items, if any."""
@@ -28,26 +30,38 @@ class BinaryMinHeap(object):
         return len(self.items)
 
     def insert(self, item):
-        """Insert the given item into this heap.
-        TODO: Best case running time: ??? under what conditions?
-        TODO: Worst case running time: ??? under what conditions?"""
+        """
+        Insert the given item into this heap.
+        Best case running time: O(1) if the inserted item is greater than
+        its parent node and no need to bubble up
+        Worst case running time: O(log(n)) because if the value of item is less
+        than its parent then we need to bubble it up in worst case the height
+        of the heap tree which is log(n)
+        """
         # Insert the item at the end and bubble up to the root
         self.items.append(item)
         if self.size() > 1:
             self._bubble_up(self._last_index())
 
     def get_min(self):
-        """Return the minimum item at the root of this heap.
-        Best and worst case running time: O(1) because min item is the root."""
+        """
+        Return the minimum item at the root of this heap.
+        Best and worst case running time: O(1) because min item is the root.
+        """
         if self.size() == 0:
             raise ValueError('Heap is empty and has no minimum item')
         assert self.size() > 0
         return self.items[0]
 
     def delete_min(self):
-        """Remove and return the minimum item at the root of this heap.
-        TODO: Best case running time: ??? under what conditions?
-        TODO: Worst case running time: ??? under what conditions?"""
+        """
+        Remove and return the minimum item at the root of this heap.
+        Best case running time: O(1) if the new root is smallest value in
+        the heap
+        Worst case running time: O(log(n)) -> when if we new root is greater
+        than its children we need to swap and bubble it down the the leaf of
+        the heap which takes log(n) time in a worst case
+        """
         if self.size() == 0:
             raise ValueError('Heap is empty and has no minimum item')
         elif self.size() == 1:
@@ -63,11 +77,14 @@ class BinaryMinHeap(object):
         return min_item
 
     def replace_min(self, item):
-        """Remove and return the minimum item at the root of this heap,
+        """
+        Remove and return the minimum item at the root of this heap,
         and insert the given item into this heap.
         This method is more efficient than calling delete_min and then insert.
-        TODO: Best case running time: ??? under what conditions?
-        TODO: Worst case running time: ??? under what conditions?"""
+        Best case running time: O(1) if item is smaller its children
+        Worst case running time: O(log(n)) if items on path up to root node are
+        out of order. Maximum path length in complete binary tree is log n.
+        """
         if self.size() == 0:
             raise ValueError('Heap is empty and has no minimum item')
         assert self.size() > 0
@@ -79,11 +96,13 @@ class BinaryMinHeap(object):
         return min_item
 
     def _bubble_up(self, index):
-        """Ensure the heap ordering property is true above the given index,
+        """
+        Ensure the heap ordering property is true above the given index,
         swapping out of order items, or until the root node is reached.
-        Best case running time: O(1) if parent item is smaller than this item.
+        Best running time: O(1) if parent of this item is smaller than item.
         Worst case running time: O(log n) if items on path up to root node are
-        out of order. Maximum path length in complete binary tree is log n."""
+        out of order. Maximum path length in complete binary tree is log n.
+        """
         if index == 0:
             return  # This index is the root node (does not have a parent)
         if not (0 <= index <= self._last_index()):
@@ -120,20 +139,21 @@ class BinaryMinHeap(object):
         # check for if left and right index are in bound
         if left_index > self._last_index() or right_index >= self.size():
             return  # This index is a leaf node (does not have any children)
+        
         # Get the item's value
         item = self.items[index]
-        # Determine which child item to compare this node's item to
+        
+        # Determine(find the smaller child) which child item to compare
+        # this node's item to
         child_index = 0
         left_child = self.items[left_index]
-        # print(f"leftchild: {left_child}")
         right_child = self.items[right_index]
-        # print(f"rightchild: {right_child}")
-      
+        
+        # smaller child index
         child_index = left_index if left_child < right_child else right_index
+        child_item = self.items[child_index]
 
         # Swap this item with a child item if values are out of order
-        child_item = self.items[child_index]
-        
         if item > child_item:
             self.items[index], self.items[child_index] = self.items[child_index], self.items[index]
             # Recursively bubble down again if necessary
@@ -160,7 +180,7 @@ class BinaryMinHeap(object):
 
 def test_binary_min_heap():
     # Create a binary min heap of 7 items
-    items = [9, 25, 86, 3, 29, 5, 55]
+    items = [9, 25, 86, 5, 3, 29, 5, 55, 3]
     heap = BinaryMinHeap()
     print('heap: {}'.format(heap))
 
@@ -175,7 +195,7 @@ def test_binary_min_heap():
         correct = heap_min == real_min
         print('get_min: {}, correct: {}'.format(heap_min, correct))
 
-    delete = True
+    delete = False
     if delete:
         print('\nDeleting items:')
         for item in sorted(items):
