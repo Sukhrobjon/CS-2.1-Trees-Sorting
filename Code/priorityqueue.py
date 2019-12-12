@@ -20,6 +20,9 @@ class PriorityQueue(object):
         """Return a string representation of this priority queue."""
         return 'PriorityQueue({} items, front={})'.format(self.length(), self.front())
 
+    def __str__(self):
+
+        
     def is_empty(self):
         """Return True if this priority queue is empty, or False otherwise."""
         return self.heap.is_empty()
@@ -66,15 +69,25 @@ class PriorityQueue(object):
         """
         if self.length() == 0:
             raise ValueError('Priority queue is empty and has no front item')
-        # TODO: Replace and return minimum item from heap
-        # ...
+        # store the old front item
+        old_front = self.front()
+
+        # replace the item at the 0th element with new item and its priority
+        self.heap.items[0] = (item, priority)
+        # print(f"new front item: {self.front()}")
+        return old_front
 
         
 if __name__ == "__main__":
-    classes = [('math', 0), ('cs', 0), ('phys', 1), ('art', 2), ('history', 3),('psychology', 3)]
+    items = [('math', 0), ('cs', 0), ('phys', 1), ('art', 2), ('history', 3),('psychology', 3)]
 
     p_queue = PriorityQueue()
-    for cl in classes:
-        p_queue.enqueue(cl)
+    for item in items:
+        elem, priority = item
+
+        p_queue.enqueue(elem, priority)
     
+    print(p_queue)
+    # print(p_queue.dequeue())
+    p_queue.push_pop('tarix', 1)
     print(p_queue)
