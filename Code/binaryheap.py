@@ -117,19 +117,20 @@ class BinaryMinHeap(object):
         # since this is mean heap the parent has to be smaller or equal
         # to its children
         if parent_item > item:
-            self.items[index], self.items[parent_index] = (
-                self.items[parent_index], self.items[index])
-            # recursively call if heap is still out of order
-            # if index != 0:
+            self.items[parent_index], self.items[index] = self.items[index], self.items[parent_index]
+        # recursively call if heap is still out of order
+        # if index != 0:
             index = self._parent_index(index)
             self._bubble_up(index)
-
+        
     def _bubble_down(self, index):
-        """Ensure the heap ordering property is true below the given index,
+        """
+        Ensure the heap ordering property is true below the given index,
         swapping out of order items, or until a leaf node is reached.
         Best case running time: O(1) if item is smaller than both child items.
         Worst case running time: O(log n) if items on path down to a leaf are
-        out of order. Maximum path length in complete binary tree is log n."""
+        out of order. Maximum path length in complete binary tree is log n.
+        """
         # print(f"items: {self.items}")
         if not (0 <= index <= self._last_index()):
             raise IndexError('Invalid index: {}'.format(index))
@@ -137,26 +138,23 @@ class BinaryMinHeap(object):
         left_index = self._left_child_index(index)
         right_index = self._right_child_index(index)
         # check for if left and right index are in bound
-        if left_index > self._last_index() or right_index >= self.size():
+        if left_index > self._last_index():
             return  # This index is a leaf node (does not have any children)
         
         # Get the item's value
         item = self.items[index]
         
         # Determine(find the smaller child) which child item to compare
-        # this node's item to
-        child_index = 0
-        left_child = self.items[left_index]
-        right_child = self.items[right_index]
-        
+
         # smaller child index
-        child_index = left_index if left_child < right_child else right_index
+        child_index = left_index if right_index >= self.size() or self.items[left_index] < self.items[right_index] else right_index
         child_item = self.items[child_index]
 
         # Swap this item with a child item if values are out of order
         if item > child_item:
             self.items[index], self.items[child_index] = self.items[child_index], self.items[index]
-            # Recursively bubble down again if necessary
+        # Recursively bubble down again if necessary
+        # if child_index != self.size():
             self._bubble_down(child_index)
 
     def _last_index(self):
@@ -195,7 +193,7 @@ def test_binary_min_heap():
         correct = heap_min == real_min
         print('get_min: {}, correct: {}'.format(heap_min, correct))
 
-    delete = False
+    delete = True
     if delete:
         print('\nDeleting items:')
         for item in sorted(items):
