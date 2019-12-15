@@ -20,8 +20,8 @@ class PriorityQueue(object):
         """Return a string representation of this priority queue."""
         return 'PriorityQueue({} items, front={})'.format(self.length(), self.front())
 
-    def __str__(self):
-
+    # def __str__(self):
+    #     pass
         
     def is_empty(self):
         """Return True if this priority queue is empty, or False otherwise."""
@@ -77,17 +77,19 @@ class PriorityQueue(object):
         # print(f"new front item: {self.front()}")
         return old_front
 
-        
-if __name__ == "__main__":
-    items = [('math', 0), ('cs', 0), ('phys', 1), ('art', 2), ('history', 3),('psychology', 3)]
 
+if __name__ == "__main__":
+    items = [('math', 0), ('cs', 0), ('phys', 1), ('art', 2), ('history', 3),
+            ('psychology', 3)]
+
+    
     p_queue = PriorityQueue()
     for item in items:
         elem, priority = item
 
         p_queue.enqueue(elem, priority)
     
-    print(p_queue)
+    print(f"queue before push_pop: {p_queue}")
     # print(p_queue.dequeue())
-    p_queue.push_pop('tarix', 1)
-    print(p_queue)
+    p_queue.push_pop('pe', 1)
+    print(f"queue after push_pop: {p_queue}")

@@ -169,16 +169,75 @@ class BinaryMinHeap(object):
 
     def _left_child_index(self, index):
         """Return the left child index of the item at the given index."""
-        return (index << 1) + 1  # Shift left to multiply by 2
+        return (index << 1) + 1  # Shift left to multiply by 
 
     def _right_child_index(self, index):
         """Return the right child index of the item at the given index."""
         return (index << 1) + 2  # Shift left to multiply by 2
 
 
+def heapify(items, lenght, index):
+    """
+    Heapify the array in max binary heap order
+    resource modified from:
+    https://www.geeksforgeeks.org/building-heap-from-array/
+    """
+    # Initialize largest as root
+    parent_index = index
+    # left child's index
+    left_index = (index << 1) + 1
+    # right child's index
+    right_index = (index << 1) + 2
+
+    # if left child is larger than root
+    if (left_index < lenght and items[left_index] > items[parent_index]):
+        parent_index = left_index
+
+    # if right child is greater than parent index
+    if (right_index < lenght and items[right_index] > items[parent_index]):
+        parent_index = right_index
+
+    # if parent_index is not root, swap it
+    if (parent_index != index):
+        items[index], items[parent_index] = items[parent_index], items[index]
+
+        # Recursively heapify the subtree
+        heapify(items, lenght, parent_index)
+
+
+def build_max_heap(items):
+    
+    # start at the last parent item index
+    parent_index = ((len(items) // 2)) - 1
+
+    # Perform reverse level order traversal
+    # from last non-leaf node and heapify
+    # each node
+    for index in range(parent_index, -1, -1):
+        heapify(items, len(items), index)
+
+
+def heap_sort(items):
+    # build the heap
+    build_max_heap(items)
+    # get the last element index
+    last_index = len(items) - 1
+    
+    while last_index > 0:
+        # swap the last and first
+        items[0], items[last_index] = items[last_index], items[0]
+        # heapify the elements, execpt last one
+        heapify(items, last_index, 0)
+        # move last index to the left side by 1
+        print(f"heapified list: {items}")
+        last_index -= 1
+
+    return items
+
 def test_binary_min_heap():
     # Create a binary min heap of 7 items
-    items = [9, 25, 86, 5, 3, 29, 5, 55, 3]
+    # items = [9, 25, 86, 5, 3, 29, 5, 55, 3]
+    items = [6, 2, 9, 4, 3, 5, 11]
     heap = BinaryMinHeap()
     print('heap: {}'.format(heap))
 
@@ -193,7 +252,7 @@ def test_binary_min_heap():
         correct = heap_min == real_min
         print('get_min: {}, correct: {}'.format(heap_min, correct))
 
-    delete = True
+    delete = False
     if delete:
         print('\nDeleting items:')
         for item in sorted(items):
@@ -204,4 +263,13 @@ def test_binary_min_heap():
 
 
 if __name__ == '__main__':
-    test_binary_min_heap()
+    # test_binary_min_heap()
+    items = [6, 2, 9, 4, 3, 5, 11]
+    # # items = [1, 50, 100, 25]
+    # result = heapify(items)
+    # print(result)
+    # arr = [1, 3, 5, 4, 6, 13, 10, 9, 8, 15, 17]
+    print(f"Original list: {items}")
+    # build_max_heap(items)
+    result = heap_sort(items)
+    print(f"sorted list: {result}")
