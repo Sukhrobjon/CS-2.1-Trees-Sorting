@@ -12,6 +12,8 @@ def counting_sort(numbers):
     Memory usage: O(n+k) , where n is sorted output array, k is range, n for
     output array, k is count list.
     """
+    if not numbers:
+        return []
     # Find range of given numbers (minimum and maximum integer values)
     start_range = min(numbers)
     end_range = max(numbers)
@@ -38,7 +40,8 @@ def counting_sort(numbers):
     # items = sorted(numbers)
     # print(len(numbers) == len(output_list), items == output_list)
     # FIXME: Improve this to mutate input instead of creating new output list
-    return output_list
+    numbers[:] = output_list
+    return numbers
 
 def bucket_sort(numbers, num_buckets=10):
     """
