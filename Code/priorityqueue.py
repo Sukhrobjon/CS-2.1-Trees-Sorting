@@ -2,7 +2,7 @@
 
 
 from binaryheap import BinaryMinHeap
-
+import unittest
 
 class PriorityQueue(object):
     """
@@ -37,7 +37,7 @@ class PriorityQueue(object):
         the given priority.
         """
         # Insert given item into heap in order according to given priority
-        new_item = (priority, item)
+        new_item = (item, priority)
         self.heap.insert(new_item)
 
     def front(self):
@@ -47,7 +47,7 @@ class PriorityQueue(object):
         """
         if self.length() == 0:
             return None
-        return self.heap.get_min()
+        return self.heap.get_min()[0]
 
     def dequeue(self):
         """
@@ -59,7 +59,7 @@ class PriorityQueue(object):
         # delete the min element
         front_elem = self.heap.delete_min()
 
-        return front_elem
+        return front_elem[0]
 
     def push_pop(self, item, priority):
         """
@@ -75,21 +75,40 @@ class PriorityQueue(object):
         # replace the item at the 0th element with new item and its priority
         self.heap.items[0] = (item, priority)
         # print(f"new front item: {self.front()}")
-        return old_front
+        return old_front[0]
 
 
 if __name__ == "__main__":
-    items = [('math', 0), ('cs', 0), ('phys', 1), ('art', 2), ('history', 3),
-            ('psychology', 3)]
+    # items = [('math', 0), ('cs', 0), ('phys', 1), ('art', 2), ('history', 3),
+    #         ('psychology', 3)]
 
     
-    p_queue = PriorityQueue()
-    for item in items:
-        elem, priority = item
+    # p_queue = PriorityQueue()
+    # for item in items:
+    #     elem, priority = item
 
-        p_queue.enqueue(elem, priority)
+    #     p_queue.enqueue(elem, priority)
     
-    print(f"queue before push_pop: {p_queue}")
-    # print(p_queue.dequeue())
-    p_queue.push_pop('pe', 1)
-    print(f"queue after push_pop: {p_queue}")
+    # print(f"queue before push_pop: {p_queue}")
+    # # print(p_queue.dequeue())
+    # p_queue.push_pop('pe', 1)
+    # print(f"queue after push_pop: {p_queue}")
+    PQ = PriorityQueue()
+    print(PQ.is_empty())
+    print(PQ.length() == 0)
+    PQ.enqueue("apple", 2)
+    assert(PQ.length() == 1)
+    print(PQ.front() == "apple")
+    print(PQ)
+    # assert(PQ.length() == 1)
+    # PQ.enqueue("orange", 0)
+    # assert(PQ.length() == 2)
+    # assert(PQ.front() == "orange")
+    # assert(PQ.length() == 2)
+    # assert(PQ.dequeue() == "orange")
+    # assert(PQ.length() == 1)
+    # assert(PQ.push_pop("banana", 4) == "apple")
+    # assert(PQ.length() == 1)
+    # assert(PQ.front() == "banana")
+    # assert(PQ.length() == 1)
+    print("PASSED")
